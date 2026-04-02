@@ -229,7 +229,7 @@ let lastResult = null;
 function renderResult(nm, data, isShared) {
   lastResult = data;
   document.getElementById('rName').textContent = nm + '님을 위한 세례명';
-  document.getElementById('rIntro').textContent = '당신의 이름과 생일로 찾은 성인들';
+  document.getElementById('rIntro').textContent = '당신의 이름과 생일로 찾은 천주교 세례명';
   const banner = document.getElementById('sharedBanner');
   if (isShared) {
     banner.innerHTML = '<div class="shared-banner">✝ ' + nm + '님을 위한 맞춤 세례명 추천입니다</div>';
