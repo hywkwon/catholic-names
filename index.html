@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>천주교 세례명 추천</title>
+<style>
+:root {
+  --bg: #1C0F0A; --mu: #7A5840; --w: #F5EDD8; --g: #C0A882;
+  --gd: #D4A853; --tc: #C4622D; --gda: rgba(212,168,83,.2); --gdb: rgba(212,168,83,.3);
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html { background: #1C0F0A; }
+body { background: #1C0F0A; min-height: 100vh; color: #F5EDD8; font-family: Georgia,'Times New Roman',serif; display: flex; justify-content: center; }
+#app { width: 100%; max-width: 680px; min-height: 100vh; background: #1C0F0A; border-left: 1px solid rgba(212,168,83,.08); border-right: 1px solid rgba(212,168,83,.08); }
+.pane { display: none; }
+.pane.vis { display: block; animation: rise .5s ease forwards; }
+@keyframes rise { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: translateY(0); } }
+.inner { max-width: 480px; margin: 0 auto; padding: 44px 24px 72px; }
+.topbar { display: flex; justify-content: space-between; align-items: center; padding-bottom: 14px; border-bottom: 1px solid var(--gdb); }
+.lbl { font-size: 9.5px; letter-spacing: .22em; color: var(--g); text-transform: uppercase; font-family: system-ui,sans-serif; }
+.rule { border: none; border-top: 1px solid var(--gdb); margin: 18px 0; }
+.cap { font-size: 9px; letter-spacing: .2em; color: var(--gd); text-transform: uppercase; font-family: system-ui,sans-serif; display: block; margin-bottom: 6px; }
+.bigtitle { font-size: 56px; font-weight: 700; line-height: 1.08; letter-spacing: -.02em; color: #F5EDD8; display: block; }
+.tagline { font-size: 15px; color: #F5EDD8; margin-bottom: 12px; }
+.kwds { font-size: 8.5px; letter-spacing: .2em; color: var(--mu); text-transform: uppercase; font-family: system-ui,sans-serif; margin-bottom: 20px; }
+.sub { font-size: 12.5px; color: var(--g); line-height: 1.9; margin-bottom: 30px; }
+.fields { display: flex; flex-direction: column; gap: 20px; margin-bottom: 28px; }
+.field label { display: block; margin-bottom: 8px; }
+.field input { width: 100%; background: rgba(255,255,255,.04); border: 1px solid var(--gdb); color: #F5EDD8; font-family: Georgia,serif; font-size: 14px; padding: 12px 14px; outline: none; transition: border-color .2s; border-radius: 0; -webkit-appearance: none; }
+.field input::placeholder { color: var(--mu); font-size: 13px; }
+.field input:focus { border-color: var(--gd); }
+.submit { width: 100%; padding: 16px; background: #F5EDD8; color: #1C0F0A; border: none; font-family: Georgia,serif; font-size: 13px; font-weight: 700; letter-spacing: .12em; cursor: pointer; transition: opacity .2s; display: block; }
+.submit:hover { opacity: .85; }
+.errmsg { font-size: 11px; color: #e07070; margin-bottom: 12px; min-height: 16px; line-height: 1.6; }
+.loadwrap { min-height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 40px; text-align: center; }
+.lx { font-size: 36px; color: var(--gd); margin-bottom: 28px; animation: hb 2.2s ease-in-out infinite; }
+@keyframes hb { 0%,100% { opacity: .4; transform: scale(1); } 50% { opacity: 1; transform: scale(1.08); } }
+.ltxt { font-size: 13px; color: var(--g); transition: opacity .35s; line-height: 1.7; }
+.uname { font-size: 24px; font-weight: 700; color: #F5EDD8; margin: 20px 0 6px; display: block; }
+.intro { font-style: italic; font-size: 16px; color: var(--g); line-height: 1.65; margin-bottom: 36px; }
+.crd { border: 1px solid var(--gdb); border-top: 2px solid var(--tc); padding: 26px 22px 28px; margin-bottom: 18px; background: rgba(255,255,255,.04); animation: rise .5s ease both; }
+.crd:nth-child(2) { animation-delay: .12s; }
+.crd:nth-child(3) { animation-delay: .24s; }
+.crdhead { display: flex; align-items: center; gap: 10px; margin-bottom: 18px; }
+.crdnum { font-size: 11px; color: var(--tc); letter-spacing: .2em; font-family: system-ui,sans-serif; }
+.crdtype { font-size: 9.5px; letter-spacing: .16em; text-transform: uppercase; padding: 3px 10px; border: 1px solid var(--gdb); color: var(--g); font-family: system-ui,sans-serif; }
+.crdrare { margin-left: auto; font-size: 10px; font-family: system-ui,sans-serif; letter-spacing: .08em; }
+.sname { font-size: 50px; font-weight: 700; line-height: 1.05; letter-spacing: -.02em; color: #F5EDD8; margin-bottom: 8px; }
+.slatin { font-size: 18px; font-style: italic; color: var(--gd); font-weight: 300; margin-bottom: 4px; }
+.snick { font-size: 11.5px; color: var(--mu); margin-bottom: 18px; font-family: system-ui,sans-serif; letter-spacing: .04em; }
+.igrid { display: grid; grid-template-columns: 1fr; gap: 6px; margin-bottom: 14px; }
+.ival { font-size: 11.5px; color: #F5EDD8; line-height: 1.45; }
+.honorbox { background: rgba(212,168,83,.07); border: 1px solid var(--gda); padding: 14px 16px; margin-bottom: 18px; display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.hon { display: flex; flex-direction: column; gap: 5px; }
+.honlbl { font-size: 8.5px; letter-spacing: .15em; color: var(--gd); text-transform: uppercase; font-family: system-ui,sans-serif; }
+.honval { font-size: 13px; color: #F5EDD8; }
+.ptags { margin-bottom: 18px; display: flex; flex-wrap: wrap; gap: 5px; }
+.ptag { font-size: 10px; letter-spacing: .1em; color: var(--gd); border: 1px solid var(--gda); padding: 2px 9px; font-family: system-ui,sans-serif; }
+.shead { display: flex; align-items: center; gap: 8px; margin-bottom: 8px; }
+.shd { font-size: 9px; letter-spacing: .2em; color: var(--gd); text-transform: uppercase; font-family: system-ui,sans-serif; white-space: nowrap; }
+.shl { flex: 1; border-top: 1px solid var(--gda); }
+.story { font-size: 13px; color: var(--g); line-height: 1.9; margin-bottom: 18px; }
+.rbox { border-left: 2px solid var(--gda); padding-left: 14px; }
+.rtxt { font-size: 12.5px; color: #F5EDD8; line-height: 1.85; }
+.again { width: 100%; padding: 14px; background: transparent; border: 1px solid var(--gdb); color: var(--g); font-family: Georgia,serif; font-size: 12px; letter-spacing: .1em; cursor: pointer; transition: all .2s; margin-top: 10px; border-radius: 0; }
+.again:hover { border-color: var(--gd); color: #F5EDD8; }
+</style>
+</head>
+<body>
+<div id="app">
+
+  <div id="pIntro" class="pane vis">
+    <div class="inner">
+      <div class="topbar">
+        <span class="lbl">Catholic &middot; Baptismal Name</span>
+        <span style="color:#D4A853;font-size:15px">&#10013;</span>
+      </div>
+      <span style="font-family:system-ui,sans-serif;font-size:13px;letter-spacing:.28em;color:#D4A853;text-transform:uppercase;display:block;margin-top:28px;margin-bottom:10px">세례명 추천</span>
+      <div style="margin-bottom:22px">
+        <span class="bigtitle">나의</span>
+        <span class="bigtitle">수호성인</span>
+      </div>
+      <p class="tagline">당신의 이름에서 찾는 천주교 세례명</p>
+      <p class="kwds">BAPTISM &middot; PATRON SAINT &middot; FEAST DAY &middot; FAITH &middot; BLESSING</p>
+      <hr class="rule">
+      <div class="sub">
+        <p>세례를 앞두고 있다면,</p>
+        <p>이름과 생년월일로 나와 인연 깊은 성인을 찾아드립니다</p>
+      </div>
+      <div class="fields">
+        <div class="field">
+          <label><span class="cap">이름 Name</span></label>
+          <input id="iName" type="text" placeholder="홍길동">
+        </div>
+        <div class="field">
+          <label><span class="cap">생년월일 Date of Birth</span></label>
+          <input id="iBirth" type="text" placeholder="901015 (6자리)" maxlength="6">
+        </div>
+      </div>
+      <div class="errmsg" id="errMsg"></div>
+      <button class="submit" onclick="doSubmit()">&#10013; &nbsp; 세례명 찾기</button>
+    </div>
+  </div>
+
+  <div id="pLoad" class="pane">
+    <div class="loadwrap">
+      <div class="lx">&#10013;</div>
+      <span class="lbl" style="color:#D4A853;margin-bottom:24px;display:block">Finding your patron saint</span>
+      <div class="ltxt" id="loadMsg">성인들의 이야기를 찾고 있습니다</div>
+    </div>
+  </div>
+
+  <div id="pResult" class="pane">
+    <div class="inner">
+      <div class="topbar">
+        <span class="lbl">Baptismal Name Guide</span>
+        <span style="color:#D4A853;font-size:15px">&#10013;</span>
+      </div>
+      <span class="uname" id="rName"></span>
+      <div class="intro" id="rIntro"></div>
+      <div id="rCards"></div>
+      <hr class="rule" style="margin-top:32px">
+      <button class="again" onclick="showPane('pIntro')">&#8617; &nbsp; 다시 추천받기</button>
+    </div>
+  </div>
+
+</div>
+<script>
+let loopId = null;
+const MSGS = ['성인들의 이야기를 찾고 있습니다','생년월일로 인연 깊은 성인을 살펴보는 중','당신만의 세례명을 준비하고 있습니다','수호성인을 연결하고 있습니다'];
+const RC = {'클래식':'#8FB8D8','드묾':'#D4A853','요즘 인기':'#C0A882'};
+
+function showPane(id) {
+  document.querySelectorAll('.pane').forEach(p => p.classList.remove('vis'));
+  document.getElementById(id).classList.add('vis');
+}
+function startLoad() {
+  let i = 0;
+  const el = document.getElementById('loadMsg');
+  el.textContent = MSGS[0];
+  loopId = setInterval(() => {
+    i = (i + 1) % MSGS.length;
+    el.style.opacity = '0';
+    setTimeout(() => { el.textContent = MSGS[i]; el.style.opacity = '1'; }, 320);
+  }, 2300);
+}
+function stopLoad() { if (loopId) { clearInterval(loopId); loopId = null; } }
+
+function doSubmit() {
+  const nm = document.getElementById('iName').value.trim();
+  const bd = document.getElementById('iBirth').value.trim();
+  const err = document.getElementById('errMsg');
+  if (!nm) { err.textContent = '이름을 입력해주세요'; return; }
+  if (!bd) { err.textContent = '생년월일을 입력해주세요'; return; }
+  err.textContent = '';
+  showPane('pLoad');
+  startLoad();
+  fetch('/api/recommend', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ name: nm, birth: bd })
+  })
+  .then(r => r.json())
+  .then(data => {
+    if (data.error) throw new Error(data.error);
+    const txt = data.content.filter(b => b.type === 'text').map(b => b.text).join('');
+    const m = txt.match(/\{[\s\S]*\}/);
+    if (!m) throw new Error('응답 파싱 실패');
+    stopLoad();
+    renderResult(nm, JSON.parse(m[0]));
+    showPane('pResult');
+  })
+  .catch(e => {
+    stopLoad();
+    showPane('pIntro');
+    document.getElementById('errMsg').textContent = '오류: ' + (e.message || String(e));
+  });
+}
+
+function renderResult(nm, data) {
+  document.getElementById('rName').textContent = nm;
+  document.getElementById('rIntro').textContent = data.intro_line || '';
+  document.getElementById('rCards').innerHTML = (data.recommendations || []).map((r, i) => {
+    const col = RC[r.rarity] || '#C0A882';
+    const pts = (r.patron_of || []).map(p => `<span class="ptag">${p}</span>`).join('');
+    return `<div class="crd">
+      <div class="crdhead">
+        <span class="crdnum">0${i+1}</span>
+        <span class="crdtype">${r.type_en||r.type}</span>
+        <span class="crdrare" style="color:${col}">${r.rarity||''}</span>
+      </div>
+      <div class="sname">${r.korean_name||''}</div>
+      <div class="slatin">${r.english_name||''}&nbsp;&middot;&nbsp;<span style="color:#7A5840;font-style:normal;font-size:15px">${r.latin_name||''}</span></div>
+      ${r.nickname?`<div class="snick">별명 &nbsp;&middot;&nbsp; ${r.nickname}</div>`:''}
+      <hr class="rule" style="margin:14px 0">
+      <div class="igrid">
+        <div><span class="cap">축일</span><div class="ival">${r.feast_day||'—'}</div></div>
+      </div>
+      <div class="honorbox">
+        <div class="hon"><span class="honlbl">남성으로 받을 때</span><span class="honval">${r.male_honorific||r.korean_name+' 형제님'}</span></div>
+        <div class="hon"><span class="honlbl">여성으로 받을 때</span><span class="honval">${r.female_honorific||r.korean_name+' 자매님'}</span></div>
+      </div>
+      ${pts?`<div class="ptags">${pts}</div>`:''}
+      <div class="shead"><span class="shd">성인 이야기</span><div class="shl"></div></div>
+      <div class="story">${r.saint_story||''}</div>
+      <div class="shead"><span class="shd">추천 이유</span><div class="shl"></div></div>
+      <div class="rbox"><div class="rtxt">${r.reason||''}</div></div>
+    </div>`;
+  }).join('');
+}
+</script>
+</body>
+</html>
