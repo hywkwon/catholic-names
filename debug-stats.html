@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<title>Stats Debug</title>
+<style>
+body { background:#1C0F0A; color:#F5EDD8; font-family:monospace; padding:40px; }
+button { background:#D4A853; color:#1C0F0A; border:none; padding:10px 20px; margin:8px; cursor:pointer; font-size:14px; font-weight:bold; }
+pre { background:#2A1810; padding:16px; margin:12px 0; white-space:pre-wrap; word-break:break-all; color:#C0A882; }
+h2 { color:#D4A853; margin:24px 0 8px; }
+</style>
+</head>
+<body>
+<h1>Stats API 디버그</h1>
+
+<h2>1. GET 통계 조회</h2>
+<button onclick="testGet()">GET /api/quiz/stats</button>
+<pre id="getResult">결과가 여기 표시됩니다</pre>
+
+<h2>2. POST 카운트 추가 (테스트용)</h2>
+<button onclick="testPost()">POST /api/quiz/stats (saint: 테스트)</button>
+<pre id="postResult">결과가 여기 표시됩니다</pre>
+
+<h2>3. POST 후 GET (연속 테스트)</h2>
+<button onclick="testBoth()">POST → GET 순서로 테스트</button>
+<pre id="bothResult">결과가 여기 표시됩니다</pre>
+
+<script>
+async function testGet() {
+  const el = document.getElementById('getResult');
+  el.textContent = '요청 중...';
+  try {
+    const res = await fetch('/api/quiz/stats');
+    const data = await res.json();
+    el.textContent = JSON.stringify(data, null, 2);
+  } catch(e) {
+    el.textContent = '에러: ' + e.message;
+  }
+}
+
+async function testPost() {
+  const el = document.getElementById('postResult');
+  el.textContent = '요청 중...';
+  try {
+    const res = await fetch('/api/quiz/stats', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ saint: '테스트성인' })
+    });
+    const data = await res.json();
+    el.textContent = JSON.stringify(data, null, 2);
+  } catch(e) {
+    el.textContent = '에러: ' + e.message;
+  }
+}
+
+async function testBoth() {
+  const el = document.getElementById('bothResult');
+  el.textContent = 'POST 요청 중...';
+  try {
+    const postRes = await fetch('/api/quiz/stats', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ saint: '마르코' })
+    });
+    const postData = await postRes.json();
+    el.textContent = 'POST 결과: ' + JSON.stringify(postData) + '\n\nGET 요청 중...';
+    const getRes = await fetch('/api/quiz/stats');
+    const getData = await getRes.json();
+    el.textContent = 'POST 결과: ' + JSON.stringify(postData) + '\n\nGET 결과:\n' + JSON.stringify(getData, null, 2);
+  } catch(e) {
+    el.textContent = '에러: ' + e.message;
+  }
+}
+</script>
+</body>
+</html>
