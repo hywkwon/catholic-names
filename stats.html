@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>세례명 추천 통계</title>
+<style>
+:root { --bg:#1C0F0A; --mu:#7A5840; --w:#F5EDD8; --g:#C0A882; --gd:#D4A853; --tc:#C4622D; --gda:rgba(212,168,83,.2); --gdb:rgba(212,168,83,.3); }
+* { box-sizing:border-box; margin:0; padding:0; }
+html,body { background:#1C0F0A; min-height:100vh; color:#F5EDD8; font-family:Georgia,'Times New Roman',serif; }
+.wrap { max-width:640px; margin:0 auto; padding:48px 24px 80px; }
+.topbar { display:flex; justify-content:space-between; align-items:center; padding-bottom:14px; border-bottom:1px solid var(--gdb); margin-bottom:40px; }
+.lbl { font-size:9.5px; letter-spacing:.22em; color:var(--g); text-transform:uppercase; font-family:system-ui,sans-serif; }
+h1 { font-size:36px; font-weight:700; color:#F5EDD8; margin-bottom:6px; }
+.sub { font-size:13px; color:var(--g); margin-bottom:40px; }
+.rule { border:none; border-top:1px solid var(--gdb); margin:28px 0; }
+.cap { font-size:9px; letter-spacing:.2em; color:var(--gd); text-transform:uppercase; font-family:system-ui,sans-serif; display:block; margin-bottom:10px; }
+.stat-big { font-size:64px; font-weight:700; color:#F5EDD8; line-height:1; margin-bottom:4px; }
+.stat-label { font-size:12px; color:var(--g); font-family:system-ui,sans-serif; letter-spacing:.08em; }
+.stat-box { border:1px solid var(--gdb); padding:24px; margin-bottom:16px; background:rgba(255,255,255,.04); }
+.bar-row { display:flex; align-items:center; gap:12px; margin-bottom:12px; }
+.bar-name { font-size:14px; color:#F5EDD8; min-width:90px; }
+.bar-track { flex:1; background:rgba(255,255,255,.06); height:6px; }
+.bar-fill { height:6px; background:var(--gd); transition:width .6s ease; }
+.bar-count { font-size:12px; color:var(--g); min-width:32px; text-align:right; font-family:system-ui,sans-serif; }
+.updated { font-size:11px; color:var(--mu); font-family:system-ui,sans-serif; margin-top:32px; }
+.err { font-size:13px; color:#e07070; padding:20px; border:1px solid rgba(224,112,112,.2); }
+.loading { font-size:13px; color:var(--g); padding:20px; text-align:center; animation:pulse 1.5s ease-in-out infinite; }
+@keyframes pulse { 0%,100%{opacity:.4} 50%{opacity:1} }
+a { color:var(--gd); font-size:12px; font-family:system-ui,sans-serif; letter-spacing:.08em; text-decoration:none; }
+a:hover { text-decoration:underline; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="topbar">
+    <span class="lbl">Catholic · Baptismal Name · Stats</span>
+    <svg width="12" height="14" viewBox="0 0 12 14"><rect x="5" y="0" width="2" height="14" fill="#D4A853"/><rect x="0" y="4" width="12" height="2" fill="#D4A853"/></svg>
+  </div>
+
+  <h1>실행 통계</h1>
+  <p class="sub">세례명 추천 서비스 사용 현황</p>
+
+  <div id="content"><div class="loading">통계를 불러오는 중입니다</div></div>
+</div>
+
+<script>
+fetch('/api/quiz/stats')
+  .then(r => r.json())
+  .then(data => {
+    if (data.error && data.total === 0) {
+      document.getElementById('content').innerHTML = `<div class="err">${data.message || data.error}</div>`;
+      return;
+    }
+    const top = data.top_saints || [];
+    const maxCount = top.length > 0 ? top[0].count : 1;
+    const barsHtml = top.length === 0
+      ? '<p style="color:var(--g);font-size:13px">아직 데이터가 없습니다</p>'
+      : top.map(s => `
+        <div class="bar-row">
+          <span class="bar-name">${s.name}</span>
+          <div class="bar-track"><div class="bar-fill" style="width:${Math.round(s.count/maxCount*100)}%"></div></div>
+          <span class="bar-count">${s.count}회</span>
+        </div>`).join('');
+
+    document.getElementById('content').innerHTML = `
+      <div class="stat-box">
+        <span class="cap">총 실행 횟수</span>
+        <div class="stat-big">${data.total_runs.toLocaleString()}</div>
+        <div class="stat-label">Total Runs</div>
+      </div>
+      <hr class="rule">
+      <span class="cap">많이 추천된 세례명 Top 10</span>
+      ${barsHtml}
+      <p class="updated">마지막 업데이트: ${new Date(data.last_updated).toLocaleString('ko-KR')}</p>
+      <hr class="rule">
+      <a href="/">← 세례명 추천으로 돌아가기</a>
+    `;
+  })
+  .catch(() => {
+    document.getElementById('content').innerHTML = '<div class="err">통계를 불러올 수 없습니다</div>';
+  });
+</script>
+</body>
+</html>
