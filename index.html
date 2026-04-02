@@ -2,75 +2,78 @@
 <html lang="ko">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <title>천주교 세례명 추천</title>
 <style>
 :root {
-  --bg: #1C0F0A; --mu: #7A5840; --w: #F5EDD8; --g: #C0A882;
-  --gd: #D4A853; --tc: #C4622D; --gda: rgba(212,168,83,.2); --gdb: rgba(212,168,83,.3);
+  --bg:#1C0F0A;--mu:#7A5840;--w:#F5EDD8;--g:#C0A882;
+  --gd:#D4A853;--tc:#C4622D;--gda:rgba(212,168,83,.2);--gdb:rgba(212,168,83,.3);
 }
-* { box-sizing: border-box; margin: 0; padding: 0; }
-html { background: #1C0F0A; }
-body { background: #1C0F0A; min-height: 100vh; color: #F5EDD8; font-family: Georgia,'Times New Roman',serif; display: flex; justify-content: center; }
-#app { width: 100%; max-width: 680px; min-height: 100vh; min-height: 100dvh; background: #1C0F0A; border-left: 1px solid rgba(212,168,83,.08); border-right: 1px solid rgba(212,168,83,.08); }
-.pane { display: none; }
-.pane.vis { display: block; animation: rise .5s ease forwards; }
-#pLoad.vis { display: flex !important; min-height: 100vh; min-height: 100dvh; align-items: center; justify-content: center; }
-@keyframes rise { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: translateY(0); } }
-.inner { max-width: 480px; margin: 0 auto; padding: 44px 24px 72px; }
-.topbar { display: flex; justify-content: space-between; align-items: center; padding-bottom: 14px; border-bottom: 1px solid var(--gdb); }
-.lbl { font-size: 9.5px; letter-spacing: .22em; color: var(--g); text-transform: uppercase; font-family: system-ui,sans-serif; }
-.rule { border: none; border-top: 1px solid var(--gdb); margin: 18px 0; }
-.cap { font-size: 9px; letter-spacing: .2em; color: var(--gd); text-transform: uppercase; font-family: system-ui,sans-serif; display: block; margin-bottom: 6px; }
-.bigtitle { font-size: 56px; font-weight: 700; line-height: 1.08; letter-spacing: -.02em; color: #F5EDD8; display: block; }
-.tagline { font-size: 15px; color: #F5EDD8; margin-bottom: 12px; }
-.kwds { font-size: 8.5px; letter-spacing: .2em; color: var(--mu); text-transform: uppercase; font-family: system-ui,sans-serif; margin-bottom: 20px; }
-.sub { font-size: 12.5px; color: var(--g); line-height: 1.9; margin-bottom: 30px; }
-.fields { display: flex; flex-direction: column; gap: 20px; margin-bottom: 28px; }
-.field label { display: block; margin-bottom: 8px; }
-.field input { width: 100%; background: rgba(255,255,255,.04); border: 1px solid var(--gdb); color: #F5EDD8; font-family: Georgia,serif; font-size: 14px; padding: 12px 14px; outline: none; transition: border-color .2s; border-radius: 0; -webkit-appearance: none; }
-.field input::placeholder { color: var(--mu); font-size: 13px; }
-.field input:focus { border-color: var(--gd); }
-.submit { width: 100%; padding: 16px; background: #F5EDD8; color: #1C0F0A; border: none; font-family: Georgia,serif; font-size: 13px; font-weight: 700; letter-spacing: .12em; cursor: pointer; transition: opacity .2s; display: block; }
-.submit:hover { opacity: .85; }
-.errmsg { font-size: 11px; color: #e07070; margin-bottom: 12px; min-height: 16px; line-height: 1.6; }
-.loadwrap { display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 40px; text-align: center; width: 100%; }
-.lx { margin: 0 auto 28px; animation: hb 2.2s ease-in-out infinite; display: flex; align-items: center; justify-content: center; }
-@keyframes hb { 0%,100% { opacity: .4; transform: scale(1); } 50% { opacity: 1; transform: scale(1.08); } }
-.ltxt { font-size: 13px; color: var(--g); transition: opacity .35s; line-height: 1.7; }
-.uname { font-size: 24px; font-weight: 700; color: #F5EDD8; margin: 20px 0 6px; display: block; }
-.intro { font-style: italic; font-size: 16px; color: var(--g); line-height: 1.65; margin-bottom: 36px; }
-.crd { border: 1px solid var(--gdb); border-top: 2px solid var(--tc); padding: 26px 22px 28px; margin-bottom: 18px; background: rgba(255,255,255,.04); animation: rise .5s ease both; }
-.crd:nth-child(2) { animation-delay: .12s; }
-.crd:nth-child(3) { animation-delay: .24s; }
-.crdhead { display: flex; align-items: center; gap: 10px; margin-bottom: 18px; }
-.crdnum { font-size: 11px; color: var(--tc); letter-spacing: .2em; font-family: system-ui,sans-serif; }
-.crdtype { font-size: 9.5px; letter-spacing: .16em; text-transform: uppercase; padding: 3px 10px; border: 1px solid var(--gdb); color: var(--g); font-family: system-ui,sans-serif; }
-.crdrare { margin-left: auto; font-size: 10px; font-family: system-ui,sans-serif; letter-spacing: .08em; }
-.sname { font-size: 50px; font-weight: 700; line-height: 1.05; letter-spacing: -.02em; color: #F5EDD8; margin-bottom: 8px; }
-.slatin { font-size: 18px; font-style: italic; color: var(--gd); font-weight: 300; margin-bottom: 4px; }
-.snick { font-size: 11.5px; color: var(--mu); margin-bottom: 18px; font-family: system-ui,sans-serif; letter-spacing: .04em; }
-.igrid { display: grid; grid-template-columns: 1fr; gap: 6px; margin-bottom: 14px; }
-.ival { font-size: 11.5px; color: #F5EDD8; line-height: 1.45; }
-.honorbox { background: rgba(212,168,83,.07); border: 1px solid var(--gda); padding: 14px 16px; margin-bottom: 18px; display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
-.hon { display: flex; flex-direction: column; gap: 5px; }
-.honlbl { font-size: 8.5px; letter-spacing: .15em; color: var(--gd); text-transform: uppercase; font-family: system-ui,sans-serif; }
-.honval { font-size: 13px; color: #F5EDD8; }
-.ptags { margin-bottom: 18px; display: flex; flex-wrap: wrap; gap: 5px; }
-.ptag { font-size: 10px; letter-spacing: .1em; color: var(--gd); border: 1px solid var(--gda); padding: 2px 9px; font-family: system-ui,sans-serif; }
-.shead { display: flex; align-items: center; gap: 8px; margin-bottom: 8px; }
-.shd { font-size: 9px; letter-spacing: .2em; color: var(--gd); text-transform: uppercase; font-family: system-ui,sans-serif; white-space: nowrap; }
-.shl { flex: 1; border-top: 1px solid var(--gda); }
-.story { font-size: 13px; color: var(--g); line-height: 1.9; margin-bottom: 18px; }
-.rbox { border-left: 2px solid var(--gda); padding-left: 14px; }
-.rtxt { font-size: 12.5px; color: #F5EDD8; line-height: 1.85; }
-.again { width: 100%; padding: 14px; background: transparent; border: 1px solid var(--gdb); color: var(--g); font-family: Georgia,serif; font-size: 12px; letter-spacing: .1em; cursor: pointer; transition: all .2s; margin-top: 10px; border-radius: 0; }
-.again:hover { border-color: var(--gd); color: #F5EDD8; }
-.toast { position: fixed; bottom: 32px; left: 50%; transform: translateX(-50%) translateY(20px); background: #D4A853; color: #1C0F0A; font-family: system-ui,sans-serif; font-size: 12px; font-weight: 700; letter-spacing: .1em; padding: 10px 22px; opacity: 0; transition: all .3s; pointer-events: none; white-space: nowrap; }
-.toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
-.share-btn { width: 100%; padding: 14px; background: transparent; border: 1px solid var(--gdb); color: var(--gd); font-family: Georgia,serif; font-size: 12px; letter-spacing: .1em; cursor: pointer; transition: all .2s; margin-top: 10px; border-radius: 0; display: flex; align-items: center; justify-content: center; gap: 8px; }
-.share-btn:hover { background: rgba(212,168,83,.1); border-color: var(--gd); }
-
+*{box-sizing:border-box;margin:0;padding:0}
+html{background:#1C0F0A;height:100%}
+body{background:#1C0F0A;min-height:100%;color:#F5EDD8;font-family:Georgia,'Times New Roman',serif;display:flex;justify-content:center}
+#app{width:100%;max-width:680px;background:#1C0F0A;border-left:1px solid rgba(212,168,83,.08);border-right:1px solid rgba(212,168,83,.08)}
+.pane{display:none}
+.pane.vis{display:block;animation:rise .5s ease forwards}
+#pLoad.vis{display:flex!important;flex-direction:column;align-items:center;justify-content:center;min-height:100vh;min-height:100dvh}
+@keyframes rise{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:translateY(0)}}
+.inner{max-width:480px;margin:0 auto;padding:44px 24px 72px}
+.topbar{display:flex;justify-content:space-between;align-items:center;padding-bottom:14px;border-bottom:1px solid var(--gdb)}
+.lbl{font-size:9.5px;letter-spacing:.22em;color:var(--g);text-transform:uppercase;font-family:system-ui,sans-serif}
+.rule{border:none;border-top:1px solid var(--gdb);margin:18px 0}
+.cap{font-size:9px;letter-spacing:.2em;color:var(--gd);text-transform:uppercase;font-family:system-ui,sans-serif;display:block;margin-bottom:6px}
+.bigtitle{font-size:56px;font-weight:700;line-height:1.08;letter-spacing:-.02em;color:#F5EDD8;display:block}
+.tagline{font-size:15px;color:#F5EDD8;margin-bottom:12px}
+.kwds{font-size:8.5px;letter-spacing:.2em;color:var(--mu);text-transform:uppercase;font-family:system-ui,sans-serif;margin-bottom:20px}
+.sub{font-size:12.5px;color:var(--g);line-height:1.9;margin-bottom:30px}
+.fields{display:flex;flex-direction:column;gap:20px;margin-bottom:28px}
+.field label{display:block;margin-bottom:8px}
+.field input{width:100%;background:rgba(255,255,255,.04);border:1px solid var(--gdb);color:#F5EDD8;font-family:Georgia,serif;font-size:14px;padding:12px 14px;outline:none;transition:border-color .2s;border-radius:0;-webkit-appearance:none}
+.field input::placeholder{color:var(--mu);font-size:13px}
+.field input:focus{border-color:var(--gd)}
+.grow{display:flex;gap:8px}
+.gbtn{flex:1;padding:11px;background:transparent;border:1px solid var(--gdb);color:var(--g);font-family:Georgia,serif;font-size:13px;cursor:pointer;transition:all .2s;border-radius:0}
+.gbtn.picked{background:rgba(212,168,83,.12);border-color:var(--gd);color:var(--gd)}
+.submit{width:100%;padding:16px;background:#F5EDD8;color:#1C0F0A;border:none;font-family:Georgia,serif;font-size:13px;font-weight:700;letter-spacing:.12em;cursor:pointer;transition:opacity .2s;display:block}
+.submit:hover{opacity:.85}
+.errmsg{font-size:11px;color:#e07070;margin-bottom:12px;min-height:16px;line-height:1.6}
+.loadwrap{display:flex;flex-direction:column;align-items:center;justify-content:center;padding:40px;text-align:center;width:100%}
+.lx{margin:0 auto 28px;animation:hb 2.2s ease-in-out infinite;display:flex;align-items:center;justify-content:center}
+@keyframes hb{0%,100%{opacity:.4;transform:scale(1)}50%{opacity:1;transform:scale(1.08)}}
+.ltxt{font-size:13px;color:var(--g);transition:opacity .35s;line-height:1.7}
+.uname{font-size:22px;font-weight:700;color:#F5EDD8;margin:20px 0 6px;display:block}
+.intro{font-style:italic;font-size:16px;color:var(--g);line-height:1.65;margin-bottom:36px}
+.crd{border:1px solid var(--gdb);border-top:2px solid var(--tc);padding:26px 22px 28px;margin-bottom:18px;background:rgba(255,255,255,.04);animation:rise .5s ease both}
+.crd:nth-child(2){animation-delay:.12s}
+.crd:nth-child(3){animation-delay:.24s}
+.crdhead{display:flex;align-items:center;gap:10px;margin-bottom:18px}
+.crdnum{font-size:11px;color:var(--tc);letter-spacing:.2em;font-family:system-ui,sans-serif}
+.crdtype{font-size:9.5px;letter-spacing:.16em;text-transform:uppercase;padding:3px 10px;border:1px solid var(--gdb);color:var(--g);font-family:system-ui,sans-serif}
+.crdrare{margin-left:auto;font-size:10px;font-family:system-ui,sans-serif;letter-spacing:.08em}
+.sname{font-size:50px;font-weight:700;line-height:1.05;letter-spacing:-.02em;color:#F5EDD8;margin-bottom:8px}
+.slatin{font-size:18px;font-style:italic;color:var(--gd);font-weight:300;margin-bottom:4px}
+.snick{font-size:11.5px;color:var(--mu);margin-bottom:18px;font-family:system-ui,sans-serif;letter-spacing:.04em}
+.igrid{display:grid;grid-template-columns:1fr;gap:6px;margin-bottom:14px}
+.ival{font-size:11.5px;color:#F5EDD8;line-height:1.45}
+.honorbox{background:rgba(212,168,83,.07);border:1px solid var(--gda);padding:14px 16px;margin-bottom:18px;display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.hon{display:flex;flex-direction:column;gap:5px}
+.honlbl{font-size:8.5px;letter-spacing:.15em;color:var(--gd);text-transform:uppercase;font-family:system-ui,sans-serif}
+.honval{font-size:13px;color:#F5EDD8}
+.ptags{margin-bottom:18px;display:flex;flex-wrap:wrap;gap:5px}
+.ptag{font-size:10px;letter-spacing:.1em;color:var(--gd);border:1px solid var(--gda);padding:2px 9px;font-family:system-ui,sans-serif}
+.shead{display:flex;align-items:center;gap:8px;margin-bottom:8px}
+.shd{font-size:9px;letter-spacing:.2em;color:var(--gd);text-transform:uppercase;font-family:system-ui,sans-serif;white-space:nowrap}
+.shl{flex:1;border-top:1px solid var(--gda)}
+.story{font-size:13px;color:var(--g);line-height:1.9;margin-bottom:18px}
+.rbox{border-left:2px solid var(--gda);padding-left:14px}
+.rtxt{font-size:12.5px;color:#F5EDD8;line-height:1.85}
+.again{width:100%;padding:14px;background:transparent;border:1px solid var(--gdb);color:var(--g);font-family:Georgia,serif;font-size:12px;letter-spacing:.1em;cursor:pointer;transition:all .2s;margin-top:10px;border-radius:0}
+.again:hover{border-color:var(--gd);color:#F5EDD8}
+.share-btn{width:100%;padding:14px;background:transparent;border:1px solid var(--gdb);color:var(--gd);font-family:Georgia,serif;font-size:12px;letter-spacing:.1em;cursor:pointer;transition:all .2s;margin-top:10px;border-radius:0;display:flex;align-items:center;justify-content:center;gap:8px}
+.share-btn:hover{background:rgba(212,168,83,.1);border-color:var(--gd)}
+.toast{position:fixed;bottom:32px;left:50%;transform:translateX(-50%) translateY(20px);background:#D4A853;color:#1C0F0A;font-family:system-ui,sans-serif;font-size:12px;font-weight:700;letter-spacing:.1em;padding:10px 22px;opacity:0;transition:all .3s;pointer-events:none;white-space:nowrap;z-index:999}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+.shared-banner{background:rgba(212,168,83,.1);border:1px solid var(--gda);padding:12px 16px;margin-bottom:20px;font-size:12px;color:var(--g);text-align:center;letter-spacing:.04em}
 </style>
 </head>
 <body>
@@ -80,7 +83,7 @@ body { background: #1C0F0A; min-height: 100vh; color: #F5EDD8; font-family: Geor
     <div class="inner">
       <div class="topbar">
         <span class="lbl">Catholic &middot; Baptismal Name</span>
-        <svg width="12" height="14" viewBox="0 0 12 14" style="display:inline-block;vertical-align:middle"><rect x="5" y="0" width="2" height="14" fill="#D4A853" rx="1"/><rect x="0" y="4" width="12" height="2" fill="#D4A853" rx="1"/></svg>
+        <svg width="12" height="14" viewBox="0 0 12 14"><rect x="5" y="0" width="2" height="14" fill="#D4A853" rx="1"/><rect x="0" y="4" width="12" height="2" fill="#D4A853" rx="1"/></svg>
       </div>
       <span style="font-family:system-ui,sans-serif;font-size:13px;letter-spacing:.28em;color:#D4A853;text-transform:uppercase;display:block;margin-top:28px;margin-bottom:10px">세례명 추천</span>
       <div style="margin-bottom:22px">
@@ -103,6 +106,13 @@ body { background: #1C0F0A; min-height: 100vh; color: #F5EDD8; font-family: Geor
           <label><span class="cap">생년월일 Date of Birth</span></label>
           <input id="iBirth" type="text" placeholder="901015 (6자리)" maxlength="6">
         </div>
+        <div class="field">
+          <label><span class="cap">성별 Gender</span></label>
+          <div class="grow">
+            <button class="gbtn picked" id="gMale" onclick="pickG('남성')">남성</button>
+            <button class="gbtn" id="gFemale" onclick="pickG('여성')">여성</button>
+          </div>
+        </div>
       </div>
       <div class="errmsg" id="errMsg"></div>
       <button class="submit" onclick="doSubmit()">세례명 찾기</button>
@@ -121,39 +131,135 @@ body { background: #1C0F0A; min-height: 100vh; color: #F5EDD8; font-family: Geor
     <div class="inner">
       <div class="topbar">
         <span class="lbl">Baptismal Name Guide</span>
-        <svg width="12" height="14" viewBox="0 0 12 14" style="display:inline-block;vertical-align:middle"><rect x="5" y="0" width="2" height="14" fill="#D4A853" rx="1"/><rect x="0" y="4" width="12" height="2" fill="#D4A853" rx="1"/></svg>
+        <svg width="12" height="14" viewBox="0 0 12 14"><rect x="5" y="0" width="2" height="14" fill="#D4A853" rx="1"/><rect x="0" y="4" width="12" height="2" fill="#D4A853" rx="1"/></svg>
       </div>
+      <div id="sharedBanner"></div>
       <span class="uname" id="rName"></span>
       <div class="intro" id="rIntro"></div>
       <div id="rCards"></div>
       <hr class="rule" style="margin-top:32px">
       <button class="share-btn" onclick="shareResult()">
-  <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><circle cx="11" cy="2.5" r="1.8" stroke="#D4A853" stroke-width="1.5"/><circle cx="11" cy="11.5" r="1.8" stroke="#D4A853" stroke-width="1.5"/><circle cx="3" cy="7" r="1.8" stroke="#D4A853" stroke-width="1.5"/><line x1="4.7" y1="6.1" x2="9.4" y2="3.3" stroke="#D4A853" stroke-width="1.2"/><line x1="4.7" y1="7.9" x2="9.4" y2="10.7" stroke="#D4A853" stroke-width="1.2"/></svg>
-  공유하기
-</button>
-<button class="again" onclick="showPane('pIntro')">&#8617; &nbsp; 다시 추천받기</button>
-<div class="toast" id="toast"></div>
+        <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><circle cx="11" cy="2.5" r="1.8" stroke="#D4A853" stroke-width="1.5"/><circle cx="11" cy="11.5" r="1.8" stroke="#D4A853" stroke-width="1.5"/><circle cx="3" cy="7" r="1.8" stroke="#D4A853" stroke-width="1.5"/><line x1="4.7" y1="6.1" x2="9.4" y2="3.3" stroke="#D4A853" stroke-width="1.2"/><line x1="4.7" y1="7.9" x2="9.4" y2="10.7" stroke="#D4A853" stroke-width="1.2"/></svg>
+        공유하기
+      </button>
+      <button class="again" onclick="goHome()">&#8617; &nbsp; 나의 세례명 찾기</button>
     </div>
   </div>
 
 </div>
-<script>
+<div class="toast" id="toast"></div>
 
-window.addEventListener('DOMContentLoaded', () => {
-  const p = new URLSearchParams(window.location.search);
-  const n = p.get('n'), b = p.get('b');
-  if (n && b) {
-    document.getElementById('iName').value = n;
-    document.getElementById('iBirth').value = b;
-    setTimeout(() => doSubmit(), 300);
+<script>
+let selG = '남성';
+let loopId = null;
+const MSGS = ['성인들의 이야기를 찾고 있습니다','생년월일로 인연 깊은 성인을 살펴보는 중','당신만의 세례명을 준비하고 있습니다','수호성인을 연결하고 있습니다'];
+const RC = {'클래식':'#8FB8D8','드묾':'#D4A853','요즘 인기':'#C0A882'};
+
+function pickG(g) {
+  selG = g;
+  document.getElementById('gMale').classList.toggle('picked', g === '남성');
+  document.getElementById('gFemale').classList.toggle('picked', g === '여성');
+}
+
+function showPane(id) {
+  document.querySelectorAll('.pane').forEach(p => { p.classList.remove('vis'); });
+  document.getElementById(id).classList.add('vis');
+}
+
+function goHome() {
+  history.pushState({}, '', window.location.pathname);
+  showPane('pIntro');
+}
+
+function startLoad() {
+  let i = 0;
+  const el = document.getElementById('loadMsg');
+  el.style.opacity = '1';
+  el.textContent = MSGS[0];
+  loopId = setInterval(() => {
+    i = (i + 1) % MSGS.length;
+    el.style.transition = 'opacity 0.3s';
+    el.style.opacity = '0';
+    setTimeout(() => { el.textContent = MSGS[i]; el.style.opacity = '1'; }, 350);
+  }, 2500);
+}
+function stopLoad() { if (loopId) { clearInterval(loopId); loopId = null; } }
+
+function doSubmit() {
+  const nm = document.getElementById('iName').value.trim();
+  const bd = document.getElementById('iBirth').value.trim();
+  const err = document.getElementById('errMsg');
+  if (!nm) { err.textContent = '이름을 입력해주세요'; return; }
+  if (!bd) { err.textContent = '생년월일을 입력해주세요'; return; }
+  err.textContent = '';
+  showPane('pLoad');
+  startLoad();
+  fetch('/api/recommend', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ name: nm, birth: bd, gender: selG })
+  })
+  .then(r => r.json())
+  .then(data => {
+    if (data.error) throw new Error(data.error);
+    const txt = data.content.filter(b => b.type === 'text').map(b => b.text).join('');
+    const m = txt.match(/\{[\s\S]*\}/);
+    if (!m) throw new Error('응답 파싱 실패');
+    const result = JSON.parse(m[0]);
+    stopLoad();
+    renderResult(nm, result, false);
+    showPane('pResult');
+  })
+  .catch(e => {
+    stopLoad();
+    showPane('pIntro');
+    document.getElementById('errMsg').textContent = '오류: ' + (e.message || String(e));
+  });
+}
+
+function renderResult(nm, data, isShared) {
+  document.getElementById('rName').textContent = nm + '님을 위한 세례명 추천';
+  document.getElementById('rIntro').textContent = data.intro_line || '';
+  const banner = document.getElementById('sharedBanner');
+  if (isShared) {
+    banner.innerHTML = '<div class="shared-banner">✝ ' + nm + '님의 세례명 추천 결과입니다</div>';
+  } else {
+    banner.innerHTML = '';
   }
-});
+  document.getElementById('rCards').innerHTML = (data.recommendations || []).map((r, i) => {
+    const col = RC[r.rarity] || '#C0A882';
+    const pts = (r.patron_of || []).map(p => `<span class="ptag">${p}</span>`).join('');
+    return `<div class="crd">
+      <div class="crdhead">
+        <span class="crdnum">0${i+1}</span>
+        <span class="crdtype">${r.type_en||r.type}</span>
+        <span class="crdrare" style="color:${col}">${r.rarity||''}</span>
+      </div>
+      <div class="sname">${r.korean_name||''}</div>
+      <div class="slatin">${r.english_name||''}&nbsp;&middot;&nbsp;<span style="color:#7A5840;font-style:normal;font-size:15px">${r.latin_name||''}</span></div>
+      ${r.nickname?`<div class="snick">별명 &nbsp;&middot;&nbsp; ${r.nickname}</div>`:''}
+      <hr class="rule" style="margin:14px 0">
+      <div class="igrid"><div><span class="cap">축일</span><div class="ival">${r.feast_day||'—'}</div></div></div>
+      <div class="honorbox">
+        <div class="hon"><span class="honlbl">남성으로 받을 때</span><span class="honval">${r.male_honorific||r.korean_name+' 형제님'}</span></div>
+        <div class="hon"><span class="honlbl">여성으로 받을 때</span><span class="honval">${r.female_honorific||r.korean_name+' 자매님'}</span></div>
+      </div>
+      ${pts?`<div class="ptags">${pts}</div>`:''}
+      <div class="shead"><span class="shd">성인 이야기</span><div class="shl"></div></div>
+      <div class="story">${r.saint_story||''}</div>
+      <div class="shead"><span class="shd">추천 이유</span><div class="shl"></div></div>
+      <div class="rbox"><div class="rtxt">${r.reason||''}</div></div>
+    </div>`;
+  }).join('');
+}
 
 async function shareResult() {
   const nm = document.getElementById('iName').value.trim();
-  const bd = document.getElementById('iBirth').value.trim();
-  const base = window.location.origin + window.location.pathname;
-  const longUrl = base + '?n=' + encodeURIComponent(nm) + '&b=' + encodeURIComponent(bd);
+  const resultData = document.getElementById('rCards').innerHTML;
+  const introText = document.getElementById('rIntro').textContent;
+  const payload = { nm, intro: introText, html: resultData };
+  const encoded = btoa(unescape(encodeURIComponent(JSON.stringify(payload))));
+  const longUrl = window.location.origin + window.location.pathname + '?r=' + encoded;
   try {
     const res = await fetch('/api/shorten', {
       method: 'POST',
@@ -174,103 +280,25 @@ function showToast(msg) {
   t.classList.add('show');
   setTimeout(() => t.classList.remove('show'), 2500);
 }
-let loopId = null;
-const MSGS = ['성인들의 이야기를 찾고 있습니다','생년월일로 인연 깊은 성인을 살펴보는 중','당신만의 세례명을 준비하고 있습니다','수호성인을 연결하고 있습니다'];
-const RC = {'클래식':'#8FB8D8','드묾':'#D4A853','요즘 인기':'#C0A882'};
 
-function showPane(id) {
-  document.querySelectorAll('.pane').forEach(p => {
-    p.classList.remove('vis');
-    p.style.display = '';
-  });
-  const el = document.getElementById(id);
-  el.classList.add('vis');
-  if (id === 'pLoad') {
-    el.style.display = 'flex';
-    el.style.minHeight = '100dvh';
-    el.style.alignItems = 'center';
-    el.style.justifyContent = 'center';
+// On load: check for shared result param
+window.addEventListener('DOMContentLoaded', () => {
+  const p = new URLSearchParams(window.location.search);
+  const r = p.get('r');
+  if (r) {
+    try {
+      const payload = JSON.parse(decodeURIComponent(escape(atob(r))));
+      document.getElementById('iName').value = payload.nm || '';
+      document.getElementById('rName').textContent = (payload.nm||'') + '님을 위한 세례명 추천';
+      document.getElementById('rIntro').textContent = payload.intro || '';
+      document.getElementById('sharedBanner').innerHTML = '<div class="shared-banner">✝ ' + (payload.nm||'') + '님의 세례명 추천 결과입니다</div>';
+      document.getElementById('rCards').innerHTML = payload.html || '';
+      showPane('pResult');
+    } catch(e) {
+      showPane('pIntro');
+    }
   }
-}
-function startLoad() {
-  let i = 0;
-  const el = document.getElementById('loadMsg');
-  el.style.opacity = '1';
-  el.textContent = MSGS[0];
-  loopId = setInterval(() => {
-    i = (i + 1) % MSGS.length;
-    el.style.transition = 'opacity 0.3s';
-    el.style.opacity = '0';
-    setTimeout(() => {
-      el.textContent = MSGS[i];
-      el.style.opacity = '1';
-    }, 350);
-  }, 2500);
-}
-function stopLoad() { if (loopId) { clearInterval(loopId); loopId = null; } }
-
-function doSubmit() {
-  const nm = document.getElementById('iName').value.trim();
-  const bd = document.getElementById('iBirth').value.trim();
-  const err = document.getElementById('errMsg');
-  if (!nm) { err.textContent = '이름을 입력해주세요'; return; }
-  if (!bd) { err.textContent = '생년월일을 입력해주세요'; return; }
-  err.textContent = '';
-  showPane('pLoad');
-  startLoad();
-  fetch('/api/recommend', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ name: nm, birth: bd })
-  })
-  .then(r => r.json())
-  .then(data => {
-    if (data.error) throw new Error(data.error);
-    const txt = data.content.filter(b => b.type === 'text').map(b => b.text).join('');
-    const m = txt.match(/\{[\s\S]*\}/);
-    if (!m) throw new Error('응답 파싱 실패');
-    stopLoad();
-    renderResult(nm, JSON.parse(m[0]));
-    showPane('pResult');
-  })
-  .catch(e => {
-    stopLoad();
-    showPane('pIntro');
-    document.getElementById('errMsg').textContent = '오류: ' + (e.message || String(e));
-  });
-}
-
-function renderResult(nm, data) {
-  document.getElementById('rName').textContent = nm;
-  document.getElementById('rIntro').textContent = data.intro_line || '';
-  document.getElementById('rCards').innerHTML = (data.recommendations || []).map((r, i) => {
-    const col = RC[r.rarity] || '#C0A882';
-    const pts = (r.patron_of || []).map(p => `<span class="ptag">${p}</span>`).join('');
-    return `<div class="crd">
-      <div class="crdhead">
-        <span class="crdnum">0${i+1}</span>
-        <span class="crdtype">${r.type_en||r.type}</span>
-        <span class="crdrare" style="color:${col}">${r.rarity||''}</span>
-      </div>
-      <div class="sname">${r.korean_name||''}</div>
-      <div class="slatin">${r.english_name||''}&nbsp;&middot;&nbsp;<span style="color:#7A5840;font-style:normal;font-size:15px">${r.latin_name||''}</span></div>
-      ${r.nickname?`<div class="snick">별명 &nbsp;&middot;&nbsp; ${r.nickname}</div>`:''}
-      <hr class="rule" style="margin:14px 0">
-      <div class="igrid">
-        <div><span class="cap">축일</span><div class="ival">${r.feast_day||'—'}</div></div>
-      </div>
-      <div class="honorbox">
-        <div class="hon"><span class="honlbl">남성으로 받을 때</span><span class="honval">${r.male_honorific||r.korean_name+' 형제님'}</span></div>
-        <div class="hon"><span class="honlbl">여성으로 받을 때</span><span class="honval">${r.female_honorific||r.korean_name+' 자매님'}</span></div>
-      </div>
-      ${pts?`<div class="ptags">${pts}</div>`:''}
-      <div class="shead"><span class="shd">성인 이야기</span><div class="shl"></div></div>
-      <div class="story">${r.saint_story||''}</div>
-      <div class="shead"><span class="shd">추천 이유</span><div class="shl"></div></div>
-      <div class="rbox"><div class="rtxt">${r.reason||''}</div></div>
-    </div>`;
-  }).join('');
-}
+});
 </script>
 </body>
 </html>
