@@ -15,7 +15,7 @@ body { background: #1C0F0A; min-height: 100vh; color: #F5EDD8; font-family: Geor
 #app { width: 100%; max-width: 680px; min-height: 100vh; min-height: 100dvh; background: #1C0F0A; border-left: 1px solid rgba(212,168,83,.08); border-right: 1px solid rgba(212,168,83,.08); }
 .pane { display: none; }
 .pane.vis { display: block; animation: rise .5s ease forwards; }
-#pLoad.vis { display: flex !important; }
+#pLoad.vis { display: flex !important; min-height: 100vh; min-height: 100dvh; align-items: center; justify-content: center; }
 @keyframes rise { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: translateY(0); } }
 .inner { max-width: 480px; margin: 0 auto; padding: 44px 24px 72px; }
 .topbar { display: flex; justify-content: space-between; align-items: center; padding-bottom: 14px; border-bottom: 1px solid var(--gdb); }
@@ -109,7 +109,7 @@ body { background: #1C0F0A; min-height: 100vh; color: #F5EDD8; font-family: Geor
     </div>
   </div>
 
-  <div id="pLoad" class="pane" style="min-height:100vh;min-height:100dvh;display:none;align-items:center;justify-content:center;">
+  <div id="pLoad" class="pane">
     <div class="loadwrap">
       <div class="lx"><svg width="32" height="38" viewBox="0 0 32 38"><rect x="14" y="0" width="4" height="38" fill="#D4A853" rx="2"/><rect x="0" y="10" width="32" height="4" fill="#D4A853" rx="2"/></svg></div>
       <span class="lbl" style="color:#D4A853;margin-bottom:24px;display:block">Finding your patron saint</span>
@@ -179,8 +179,18 @@ const MSGS = ['성인들의 이야기를 찾고 있습니다','생년월일로 �
 const RC = {'클래식':'#8FB8D8','드묾':'#D4A853','요즘 인기':'#C0A882'};
 
 function showPane(id) {
-  document.querySelectorAll('.pane').forEach(p => p.classList.remove('vis'));
-  document.getElementById(id).classList.add('vis');
+  document.querySelectorAll('.pane').forEach(p => {
+    p.classList.remove('vis');
+    p.style.display = '';
+  });
+  const el = document.getElementById(id);
+  el.classList.add('vis');
+  if (id === 'pLoad') {
+    el.style.display = 'flex';
+    el.style.minHeight = '100dvh';
+    el.style.alignItems = 'center';
+    el.style.justifyContent = 'center';
+  }
 }
 function startLoad() {
   let i = 0;
