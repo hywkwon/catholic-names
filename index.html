@@ -219,7 +219,7 @@ function doSubmit() {
 
 function renderResult(nm, data, isShared) {
   document.getElementById('rName').textContent = nm + '님을 위한 세례명';
-  document.getElementById('rIntro').textContent = data.intro_line || '';
+  document.getElementById('rIntro').textContent = '당신과 어울리는 성인은 다음과 같습니다.';
   const banner = document.getElementById('sharedBanner');
   if (isShared) {
     banner.innerHTML = '<div class="shared-banner">✝ ' + nm + '님을 위한 맞춤 세례명 추천입니다</div>';
