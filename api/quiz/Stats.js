@@ -1,15 +1,17 @@
 const KV_URL = process.env.KV_REST_API_URL;
 const KV_TOKEN = process.env.KV_REST_API_TOKEN;
 
-async function kv(cmd, ...args) {
-  // cmd is NOT encoded, only args are
-  const encodedArgs = args.map(a => encodeURIComponent(String(a)));
-  const url = `${KV_URL}/${cmd}/${encodedArgs.join('/')}`;
-  const res = await fetch(url, {
-    headers: { Authorization: `Bearer ${KV_TOKEN}` }
+// Upstash REST API - POST with JSON body (most reliable, no URL encoding issues)
+async function kv(...args) {
+  const res = await fetch(KV_URL, {
+    method: 'POST',
+    headers: {
+      Authorization: `Bearer ${KV_TOKEN}`,
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(args)
   });
-  const json = await res.json();
-  return json;
+  return res.json();
 }
 
 export default async function handler(req, res) {
@@ -51,7 +53,7 @@ export default async function handler(req, res) {
         top_saints: topSaints
       });
     } catch (e) {
-      return res.status(500).json({ error: e.message });
+      return res.status(500).json({ error: e.message, stack: e.stack });
     }
   }
 
