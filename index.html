@@ -229,7 +229,7 @@ function doSubmit() {
 async function fetchRecs(nm, bd) {
   const res = await fetch('https://api.anthropic.com/v1/messages', {
     method: 'POST',
-    headers: { 'Content-Type': 'application/json', 'x-api-key': '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', 'anthropic-version': '2023-06-01', 'anthropic-dangerous-direct-browser-access': 'true' },
+    headers: { 'Content-Type': 'application/json', 'x-api-key': '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', 'anthropic-version': '2023-06-01', 'anthropic-dangerous-direct-browser-access': 'true' },
     body: JSON.stringify({
       model: 'claude-sonnet-4-20250514',
       max_tokens: 2000,
