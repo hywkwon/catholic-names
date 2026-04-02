@@ -142,7 +142,7 @@ body{background:#1C0F0A;min-height:100%;color:#F5EDD8;font-family:Georgia,'Times
         <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><circle cx="11" cy="2.5" r="1.8" stroke="#D4A853" stroke-width="1.5"/><circle cx="11" cy="11.5" r="1.8" stroke="#D4A853" stroke-width="1.5"/><circle cx="3" cy="7" r="1.8" stroke="#D4A853" stroke-width="1.5"/><line x1="4.7" y1="6.1" x2="9.4" y2="3.3" stroke="#D4A853" stroke-width="1.2"/><line x1="4.7" y1="7.9" x2="9.4" y2="10.7" stroke="#D4A853" stroke-width="1.2"/></svg>
         공유하기
       </button>
-      <button class="again" onclick="goHome()"><svg width="14" height="10" viewBox="0 0 14 10" fill="none" style="display:inline-block;vertical-align:middle;margin-right:8px"><polyline points="5,1 1,5 5,9" stroke="#C0A882" stroke-width="1.5" stroke-linecap="square" stroke-linejoin="miter" fill="none"/><line x1="1" y1="5" x2="13" y2="5" stroke="#C0A882" stroke-width="1.5" stroke-linecap="square"/></svg>나의 세례명 찾기</button>
+      <button class="again" onclick="goHome()"><svg width="14" height="14" viewBox="0 0 14 14" fill="none" style="display:inline-block;vertical-align:middle;margin-right:8px"><path d="M12 7A5 5 0 1 1 7 2a5 5 0 0 1 3.5 1.5L12 2" stroke="#C0A882" stroke-width="1.5" stroke-linecap="square" stroke-linejoin="miter"/><polyline points="10,1 12,2 11,4" stroke="#C0A882" stroke-width="1.5" stroke-linecap="square" stroke-linejoin="miter" fill="none"/></svg>다시 테스트하기</button>
     </div>
   </div>
 
@@ -217,9 +217,11 @@ function doSubmit() {
   });
 }
 
+let lastResult = null;
 function renderResult(nm, data, isShared) {
+  lastResult = data;
   document.getElementById('rName').textContent = nm + '님을 위한 세례명';
-  document.getElementById('rIntro').textContent = '당신과 어울리는 성인은 다음과 같습니다.';
+  document.getElementById('rIntro').textContent = '당신의 이름과 생일로 찾는 천주교 세례명';
   const banner = document.getElementById('sharedBanner');
   if (isShared) {
     banner.innerHTML = '<div class="shared-banner">✝ ' + nm + '님을 위한 맞춤 세례명 추천입니다</div>';
@@ -255,11 +257,10 @@ function renderResult(nm, data, isShared) {
 
 async function shareResult() {
   const nm = document.getElementById('iName').value.trim();
-  const bd = document.getElementById('iBirth').value.trim();
+  const encoded = btoa(unescape(encodeURIComponent(JSON.stringify(lastResult))));
   const longUrl = window.location.origin + window.location.pathname
-    + '?n=' + encodeURIComponent(nm)
-    + '&b=' + encodeURIComponent(bd)
-    + '&g=' + encodeURIComponent(selG);
+    + '?nm=' + encodeURIComponent(nm)
+    + '&d=' + encoded;
   let finalUrl = longUrl;
   try {
     const res = await fetch('/api/shorten', {
@@ -283,31 +284,16 @@ function showToast(msg) {
 
 // On load: check for shared link params
 window.addEventListener('DOMContentLoaded', () => {
-  const p = new URLSearchParams(window.location.search);
-  const n = p.get('n'), b = p.get('b'), g = p.get('g');
-  if (n && b) {
-    document.getElementById('iName').value = n;
-    document.getElementById('iBirth').value = b;
-    if (g) { selG = g; pickG(g); }
-    showPane('pLoad');
-    startLoad();
-    fetch('/api/recommend', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ name: n, birth: b, gender: g || '남성' })
-    })
-    .then(r => r.json())
-    .then(data => {
-      if (data.error) throw new Error(data.error);
-      const txt = data.content.filter(b => b.type === 'text').map(b => b.text).join('');
-      const m = txt.match(/\{[\s\S]*\}/);
-      if (!m) throw new Error('파싱 실패');
-      const result = JSON.parse(m[0]);
-      stopLoad();
-      renderResult(n, result, true);
+  const params = new URLSearchParams(window.location.search);
+  const sharedNm = params.get('nm');
+  const sharedD  = params.get('d');
+  if (sharedNm && sharedD) {
+    try {
+      const result = JSON.parse(decodeURIComponent(escape(atob(sharedD))));
+      document.getElementById('iName').value = sharedNm;
+      renderResult(sharedNm, result, true);
       showPane('pResult');
-    })
-    .catch(() => { stopLoad(); showPane('pIntro'); });
+    } catch(e) { showPane('pIntro'); }
   }
 });
 </script>
