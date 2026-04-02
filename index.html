@@ -15,6 +15,7 @@ body { background: #1C0F0A; min-height: 100vh; color: #F5EDD8; font-family: Geor
 #app { width: 100%; max-width: 680px; min-height: 100vh; min-height: 100dvh; background: #1C0F0A; border-left: 1px solid rgba(212,168,83,.08); border-right: 1px solid rgba(212,168,83,.08); }
 .pane { display: none; }
 .pane.vis { display: block; animation: rise .5s ease forwards; }
+#pLoad.vis { display: flex !important; }
 @keyframes rise { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: translateY(0); } }
 .inner { max-width: 480px; margin: 0 auto; padding: 44px 24px 72px; }
 .topbar { display: flex; justify-content: space-between; align-items: center; padding-bottom: 14px; border-bottom: 1px solid var(--gdb); }
@@ -33,10 +34,8 @@ body { background: #1C0F0A; min-height: 100vh; color: #F5EDD8; font-family: Geor
 .submit { width: 100%; padding: 16px; background: #F5EDD8; color: #1C0F0A; border: none; font-family: Georgia,serif; font-size: 13px; font-weight: 700; letter-spacing: .12em; cursor: pointer; transition: opacity .2s; display: block; }
 .submit:hover { opacity: .85; }
 .errmsg { font-size: 11px; color: #e07070; margin-bottom: 12px; min-height: 16px; line-height: 1.6; }
-.loadwrap { min-height: 100vh; min-height: 100dvh; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 40px; text-align: center; }
-.lx { width: 28px; height: 34px; margin: 0 auto 28px; animation: hb 2.2s ease-in-out infinite; position: relative; }
-.lx::before { content: ""; position: absolute; top: 0; left: 50%; transform: translateX(-50%); width: 4px; height: 100%; background: #D4A853; border-radius: 2px; }
-.lx::after { content: ""; position: absolute; top: 30%; left: 0; width: 100%; height: 4px; background: #D4A853; border-radius: 2px; }
+.loadwrap { display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 40px; text-align: center; width: 100%; }
+.lx { margin: 0 auto 28px; animation: hb 2.2s ease-in-out infinite; display: flex; align-items: center; justify-content: center; }
 @keyframes hb { 0%,100% { opacity: .4; transform: scale(1); } 50% { opacity: 1; transform: scale(1.08); } }
 .ltxt { font-size: 13px; color: var(--g); transition: opacity .35s; line-height: 1.7; }
 .uname { font-size: 24px; font-weight: 700; color: #F5EDD8; margin: 20px 0 6px; display: block; }
@@ -67,6 +66,11 @@ body { background: #1C0F0A; min-height: 100vh; color: #F5EDD8; font-family: Geor
 .rtxt { font-size: 12.5px; color: #F5EDD8; line-height: 1.85; }
 .again { width: 100%; padding: 14px; background: transparent; border: 1px solid var(--gdb); color: var(--g); font-family: Georgia,serif; font-size: 12px; letter-spacing: .1em; cursor: pointer; transition: all .2s; margin-top: 10px; border-radius: 0; }
 .again:hover { border-color: var(--gd); color: #F5EDD8; }
+.toast { position: fixed; bottom: 32px; left: 50%; transform: translateX(-50%) translateY(20px); background: #D4A853; color: #1C0F0A; font-family: system-ui,sans-serif; font-size: 12px; font-weight: 700; letter-spacing: .1em; padding: 10px 22px; opacity: 0; transition: all .3s; pointer-events: none; white-space: nowrap; }
+.toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+.share-btn { width: 100%; padding: 14px; background: transparent; border: 1px solid var(--gdb); color: var(--gd); font-family: Georgia,serif; font-size: 12px; letter-spacing: .1em; cursor: pointer; transition: all .2s; margin-top: 10px; border-radius: 0; display: flex; align-items: center; justify-content: center; gap: 8px; }
+.share-btn:hover { background: rgba(212,168,83,.1); border-color: var(--gd); }
+
 </style>
 </head>
 <body>
@@ -76,7 +80,7 @@ body { background: #1C0F0A; min-height: 100vh; color: #F5EDD8; font-family: Geor
     <div class="inner">
       <div class="topbar">
         <span class="lbl">Catholic &middot; Baptismal Name</span>
-        <span style="display:inline-flex;align-items:center;justify-content:center;width:14px;height:14px;position:relative;"><span style="position:absolute;width:2px;height:100%;background:#D4A853;left:50%;transform:translateX(-50%);border-radius:1px"></span><span style="position:absolute;height:2px;width:100%;background:#D4A853;top:30%;border-radius:1px"></span></span>
+        <svg width="12" height="14" viewBox="0 0 12 14" style="display:inline-block;vertical-align:middle"><rect x="5" y="0" width="2" height="14" fill="#D4A853" rx="1"/><rect x="0" y="4" width="12" height="2" fill="#D4A853" rx="1"/></svg>
       </div>
       <span style="font-family:system-ui,sans-serif;font-size:13px;letter-spacing:.28em;color:#D4A853;text-transform:uppercase;display:block;margin-top:28px;margin-bottom:10px">세례명 추천</span>
       <div style="margin-bottom:22px">
@@ -101,13 +105,13 @@ body { background: #1C0F0A; min-height: 100vh; color: #F5EDD8; font-family: Geor
         </div>
       </div>
       <div class="errmsg" id="errMsg"></div>
-      <button class="submit" onclick="doSubmit()"><span style="display:inline-flex;align-items:center;gap:10px;"><span style="display:inline-block;width:12px;height:14px;position:relative;"><span style="position:absolute;width:2px;height:100%;background:#1C0F0A;left:50%;transform:translateX(-50%);border-radius:1px"></span><span style="position:absolute;height:2px;width:100%;background:#1C0F0A;top:30%;border-radius:1px"></span></span>세례명 찾기</span></button>
+      <button class="submit" onclick="doSubmit()">세례명 찾기</button>
     </div>
   </div>
 
-  <div id="pLoad" class="pane">
+  <div id="pLoad" class="pane" style="min-height:100vh;min-height:100dvh;display:none;align-items:center;justify-content:center;">
     <div class="loadwrap">
-      <div class="lx"></div>
+      <div class="lx"><svg width="32" height="38" viewBox="0 0 32 38"><rect x="14" y="0" width="4" height="38" fill="#D4A853" rx="2"/><rect x="0" y="10" width="32" height="4" fill="#D4A853" rx="2"/></svg></div>
       <span class="lbl" style="color:#D4A853;margin-bottom:24px;display:block">Finding your patron saint</span>
       <div class="ltxt" id="loadMsg">성인들의 이야기를 찾고 있습니다</div>
     </div>
@@ -117,18 +121,59 @@ body { background: #1C0F0A; min-height: 100vh; color: #F5EDD8; font-family: Geor
     <div class="inner">
       <div class="topbar">
         <span class="lbl">Baptismal Name Guide</span>
-        <span style="display:inline-flex;align-items:center;justify-content:center;width:14px;height:14px;position:relative;"><span style="position:absolute;width:2px;height:100%;background:#D4A853;left:50%;transform:translateX(-50%);border-radius:1px"></span><span style="position:absolute;height:2px;width:100%;background:#D4A853;top:30%;border-radius:1px"></span></span>
+        <svg width="12" height="14" viewBox="0 0 12 14" style="display:inline-block;vertical-align:middle"><rect x="5" y="0" width="2" height="14" fill="#D4A853" rx="1"/><rect x="0" y="4" width="12" height="2" fill="#D4A853" rx="1"/></svg>
       </div>
       <span class="uname" id="rName"></span>
       <div class="intro" id="rIntro"></div>
       <div id="rCards"></div>
       <hr class="rule" style="margin-top:32px">
-      <button class="again" onclick="showPane('pIntro')">&#8617; &nbsp; 다시 추천받기</button>
+      <button class="share-btn" onclick="shareResult()">
+  <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><circle cx="11" cy="2.5" r="1.8" stroke="#D4A853" stroke-width="1.5"/><circle cx="11" cy="11.5" r="1.8" stroke="#D4A853" stroke-width="1.5"/><circle cx="3" cy="7" r="1.8" stroke="#D4A853" stroke-width="1.5"/><line x1="4.7" y1="6.1" x2="9.4" y2="3.3" stroke="#D4A853" stroke-width="1.2"/><line x1="4.7" y1="7.9" x2="9.4" y2="10.7" stroke="#D4A853" stroke-width="1.2"/></svg>
+  공유하기
+</button>
+<button class="again" onclick="showPane('pIntro')">&#8617; &nbsp; 다시 추천받기</button>
+<div class="toast" id="toast"></div>
     </div>
   </div>
 
 </div>
 <script>
+
+window.addEventListener('DOMContentLoaded', () => {
+  const p = new URLSearchParams(window.location.search);
+  const n = p.get('n'), b = p.get('b');
+  if (n && b) {
+    document.getElementById('iName').value = n;
+    document.getElementById('iBirth').value = b;
+    setTimeout(() => doSubmit(), 300);
+  }
+});
+
+async function shareResult() {
+  const nm = document.getElementById('iName').value.trim();
+  const bd = document.getElementById('iBirth').value.trim();
+  const base = window.location.origin + window.location.pathname;
+  const longUrl = base + '?n=' + encodeURIComponent(nm) + '&b=' + encodeURIComponent(bd);
+  try {
+    const res = await fetch('/api/shorten', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ url: longUrl })
+    });
+    const data = await res.json();
+    await navigator.clipboard.writeText(data.shortUrl || longUrl);
+  } catch (e) {
+    try { await navigator.clipboard.writeText(longUrl); } catch {}
+  }
+  showToast('링크가 복사되었습니다');
+}
+
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 2500);
+}
 let loopId = null;
 const MSGS = ['성인들의 이야기를 찾고 있습니다','생년월일로 인연 깊은 성인을 살펴보는 중','당신만의 세례명을 준비하고 있습니다','수호성인을 연결하고 있습니다'];
 const RC = {'클래식':'#8FB8D8','드묾':'#D4A853','요즘 인기':'#C0A882'};
