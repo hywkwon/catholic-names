@@ -12,7 +12,7 @@
 * { box-sizing: border-box; margin: 0; padding: 0; }
 html { background: #1C0F0A; }
 body { background: #1C0F0A; min-height: 100vh; color: #F5EDD8; font-family: Georgia,'Times New Roman',serif; display: flex; justify-content: center; }
-#app { width: 100%; max-width: 680px; min-height: 100vh; background: #1C0F0A; border-left: 1px solid rgba(212,168,83,.08); border-right: 1px solid rgba(212,168,83,.08); }
+#app { width: 100%; max-width: 680px; min-height: 100vh; min-height: 100dvh; background: #1C0F0A; border-left: 1px solid rgba(212,168,83,.08); border-right: 1px solid rgba(212,168,83,.08); }
 .pane { display: none; }
 .pane.vis { display: block; animation: rise .5s ease forwards; }
 @keyframes rise { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: translateY(0); } }
@@ -33,8 +33,10 @@ body { background: #1C0F0A; min-height: 100vh; color: #F5EDD8; font-family: Geor
 .submit { width: 100%; padding: 16px; background: #F5EDD8; color: #1C0F0A; border: none; font-family: Georgia,serif; font-size: 13px; font-weight: 700; letter-spacing: .12em; cursor: pointer; transition: opacity .2s; display: block; }
 .submit:hover { opacity: .85; }
 .errmsg { font-size: 11px; color: #e07070; margin-bottom: 12px; min-height: 16px; line-height: 1.6; }
-.loadwrap { min-height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 40px; text-align: center; }
-.lx { font-size: 36px; color: var(--gd); margin-bottom: 28px; animation: hb 2.2s ease-in-out infinite; }
+.loadwrap { min-height: 100vh; min-height: 100dvh; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 40px; text-align: center; }
+.lx { width: 28px; height: 34px; margin: 0 auto 28px; animation: hb 2.2s ease-in-out infinite; position: relative; }
+.lx::before { content: ""; position: absolute; top: 0; left: 50%; transform: translateX(-50%); width: 4px; height: 100%; background: #D4A853; border-radius: 2px; }
+.lx::after { content: ""; position: absolute; top: 30%; left: 0; width: 100%; height: 4px; background: #D4A853; border-radius: 2px; }
 @keyframes hb { 0%,100% { opacity: .4; transform: scale(1); } 50% { opacity: 1; transform: scale(1.08); } }
 .ltxt { font-size: 13px; color: var(--g); transition: opacity .35s; line-height: 1.7; }
 .uname { font-size: 24px; font-weight: 700; color: #F5EDD8; margin: 20px 0 6px; display: block; }
@@ -74,7 +76,7 @@ body { background: #1C0F0A; min-height: 100vh; color: #F5EDD8; font-family: Geor
     <div class="inner">
       <div class="topbar">
         <span class="lbl">Catholic &middot; Baptismal Name</span>
-        <span style="color:#D4A853;font-size:15px">&#10013;&#xFE0E;</span>
+        <span style="display:inline-flex;align-items:center;justify-content:center;width:14px;height:14px;position:relative;"><span style="position:absolute;width:2px;height:100%;background:#D4A853;left:50%;transform:translateX(-50%);border-radius:1px"></span><span style="position:absolute;height:2px;width:100%;background:#D4A853;top:30%;border-radius:1px"></span></span>
       </div>
       <span style="font-family:system-ui,sans-serif;font-size:13px;letter-spacing:.28em;color:#D4A853;text-transform:uppercase;display:block;margin-top:28px;margin-bottom:10px">세례명 추천</span>
       <div style="margin-bottom:22px">
@@ -99,13 +101,13 @@ body { background: #1C0F0A; min-height: 100vh; color: #F5EDD8; font-family: Geor
         </div>
       </div>
       <div class="errmsg" id="errMsg"></div>
-      <button class="submit" onclick="doSubmit()">&#10013;&#xFE0E; &nbsp; 세례명 찾기</button>
+      <button class="submit" onclick="doSubmit()"><span style="display:inline-flex;align-items:center;gap:10px;"><span style="display:inline-block;width:12px;height:14px;position:relative;"><span style="position:absolute;width:2px;height:100%;background:#1C0F0A;left:50%;transform:translateX(-50%);border-radius:1px"></span><span style="position:absolute;height:2px;width:100%;background:#1C0F0A;top:30%;border-radius:1px"></span></span>세례명 찾기</span></button>
     </div>
   </div>
 
   <div id="pLoad" class="pane">
     <div class="loadwrap">
-      <div class="lx"><span style="font-family:Arial,sans-serif;font-style:normal">&#10013;&#xFE0E;</span></div>
+      <div class="lx"></div>
       <span class="lbl" style="color:#D4A853;margin-bottom:24px;display:block">Finding your patron saint</span>
       <div class="ltxt" id="loadMsg">성인들의 이야기를 찾고 있습니다</div>
     </div>
@@ -115,7 +117,7 @@ body { background: #1C0F0A; min-height: 100vh; color: #F5EDD8; font-family: Geor
     <div class="inner">
       <div class="topbar">
         <span class="lbl">Baptismal Name Guide</span>
-        <span style="color:#D4A853;font-size:15px">&#10013;&#xFE0E;</span>
+        <span style="display:inline-flex;align-items:center;justify-content:center;width:14px;height:14px;position:relative;"><span style="position:absolute;width:2px;height:100%;background:#D4A853;left:50%;transform:translateX(-50%);border-radius:1px"></span><span style="position:absolute;height:2px;width:100%;background:#D4A853;top:30%;border-radius:1px"></span></span>
       </div>
       <span class="uname" id="rName"></span>
       <div class="intro" id="rIntro"></div>
