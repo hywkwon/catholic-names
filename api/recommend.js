@@ -12,12 +12,12 @@ export default async function handler(req, res) {
 
   const prompt = `천주교 세례명 3가지 추천. 이름:${name}, 생년월일:${birth}, 성별:${gender||'미지정'}
 
-JSON만 출력 (코드블럭 없이). 모든 설명은 한 문장으로 짧게:
+JSON만 출력 (코드블럭 없이). saint_story는 2-3문장으로, reason은 1-2문장으로:
 
 {"intro_line":"20자 이내","recommendations":[
-{"type":"종합 추천","type_en":"COMPREHENSIVE","korean_name":"루치아","latin_name":"Lucia","english_name":"Lucy","nickname":"루시(Lucy)","feast_day":"12월 13일","male_honorific":"루치오 형제님","female_honorific":"루치아 자매님","patron_of":["눈병환자","작가"],"saint_story":"한 문장 이내 성인 소개","reason":"한 문장 이내 추천 이유","rarity":"클래식"},
-{"type":"유니크 추천","type_en":"UNIQUE","korean_name":"","latin_name":"","english_name":"","nickname":"","feast_day":"","male_honorific":"","female_honorific":"","patron_of":[],"saint_story":"한 문장","reason":"한 문장","rarity":"드묾"},
-{"type":"인기 추천","type_en":"TRENDING","korean_name":"","latin_name":"","english_name":"","nickname":"","feast_day":"","male_honorific":"","female_honorific":"","patron_of":[],"saint_story":"한 문장","reason":"한 문장","rarity":"요즘 인기"}
+{"type":"종합 추천","type_en":"COMPREHENSIVE","korean_name":"루치아","latin_name":"Lucia","english_name":"Lucy","nickname":"루시(Lucy)","feast_day":"12월 13일","male_honorific":"루치오 형제님","female_honorific":"루치아 자매님","patron_of":["눈병환자","작가"],"saint_story":"2-3문장 성인 소개","reason":"한 문장 이내 추천 이유","rarity":"클래식"},
+{"type":"유니크 추천","type_en":"UNIQUE","korean_name":"","latin_name":"","english_name":"","nickname":"","feast_day":"","male_honorific":"","female_honorific":"","patron_of":[],"saint_story":"2-3문장","reason":"한 문장","rarity":"드묾"},
+{"type":"인기 추천","type_en":"TRENDING","korean_name":"","latin_name":"","english_name":"","nickname":"","feast_day":"","male_honorific":"","female_honorific":"","patron_of":[],"saint_story":"2-3문장","reason":"한 문장","rarity":"요즘 인기"}
 ]}
 
 규칙:
