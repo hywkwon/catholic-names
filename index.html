@@ -221,7 +221,7 @@ let lastResult = null;
 function renderResult(nm, data, isShared) {
   lastResult = data;
   document.getElementById('rName').textContent = nm + '님을 위한 세례명';
-  document.getElementById('rIntro').textContent = '당신의 이름과 생일로 찾은 천주교 세례명';
+  document.getElementById('rIntro').textContent = '당신의 이름과 생일로 찾는 천주교 세례명';
   const banner = document.getElementById('sharedBanner');
   if (isShared) {
     banner.innerHTML = '<div class="shared-banner">✝ ' + nm + '님을 위한 맞춤 세례명 추천입니다</div>';
@@ -257,7 +257,8 @@ function renderResult(nm, data, isShared) {
 
 async function shareResult() {
   const nm = document.getElementById('iName').value.trim();
-  const encoded = btoa(unescape(encodeURIComponent(JSON.stringify(lastResult))));
+  const raw = btoa(unescape(encodeURIComponent(JSON.stringify(lastResult))));
+  const encoded = raw.replace(/\+/g, '-').replace(/\//g, '_').replace(/=/g, '');
   const longUrl = window.location.origin + window.location.pathname
     + '?nm=' + encodeURIComponent(nm)
     + '&d=' + encoded;
@@ -289,7 +290,9 @@ window.addEventListener('DOMContentLoaded', () => {
   const sharedD  = params.get('d');
   if (sharedNm && sharedD) {
     try {
-      const result = JSON.parse(decodeURIComponent(escape(atob(sharedD))));
+      const pad = sharedD.length % 4 === 0 ? '' : '='.repeat(4 - sharedD.length % 4);
+      const b64 = (sharedD + pad).replace(/-/g, '+').replace(/_/g, '/');
+      const result = JSON.parse(decodeURIComponent(escape(atob(b64))));
       document.getElementById('iName').value = sharedNm;
       renderResult(sharedNm, result, true);
       showPane('pResult');
