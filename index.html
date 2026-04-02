@@ -280,8 +280,29 @@ async function shareResult() {
     const data = await res.json();
     if (data.shortUrl && data.shortUrl.startsWith('http')) finalUrl = data.shortUrl;
   } catch (e) {}
-  try { await navigator.clipboard.writeText(finalUrl); } catch {}
+  copyToClipboard(finalUrl);
   showToast('링크가 복사되었습니다');
+}
+
+function copyToClipboard(text) {
+  if (navigator.share) {
+    navigator.share({ url: text }).catch(() => fallbackCopy(text));
+  } else if (navigator.clipboard && navigator.clipboard.writeText) {
+    navigator.clipboard.writeText(text).catch(() => fallbackCopy(text));
+  } else {
+    fallbackCopy(text);
+  }
+}
+
+function fallbackCopy(text) {
+  const ta = document.createElement('textarea');
+  ta.value = text;
+  ta.style.cssText = 'position:fixed;top:0;left:0;opacity:0;font-size:16px';
+  document.body.appendChild(ta);
+  ta.focus();
+  ta.select();
+  try { document.execCommand('copy'); } catch(e) {}
+  document.body.removeChild(ta);
 }
 
 function showToast(msg) {
