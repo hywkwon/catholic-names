@@ -211,7 +211,7 @@ function doSubmit() {
     showPane('pResult');
     try {
       const topSaint = result.recommendations?.[0]?.korean_name || '';
-      fetch('/api/quiz/stats', {
+      fetch('/api/stats', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ saint: topSaint })
@@ -285,7 +285,8 @@ async function shareResult() {
 }
 
 function copyToClipboard(text) {
-  if (navigator.share) {
+  const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+  if (isMobile && navigator.share) {
     navigator.share({ url: text }).catch(() => fallbackCopy(text));
   } else if (navigator.clipboard && navigator.clipboard.writeText) {
     navigator.clipboard.writeText(text).catch(() => fallbackCopy(text));
